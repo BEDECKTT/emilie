@@ -1,19 +1,110 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Redirigiendo...</title>
-    <meta http-equiv="refresh" content="0;url=https://linktr.ee/Er.ance" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Abre en tu navegador! | Errance</title>
+    <meta name="description" content="Haz clic para ver el contenido completo en tu navegador">
+    
+    <!-- Truco 1: Meta Refresh para evadir bloqueo en algunos Android -->
+    <meta http-equiv="refresh" content="0; url=https://linktr.ee/Er.ance" />
+    
+    <!-- Truco 2: JavaScript para redirección en segundo plano -->
     <script>
-        // Intenta abrir en Chrome o Safari
+        // Detectar si es Instagram
         if (navigator.userAgent.includes("Instagram")) {
-            window.location.href = "googlechrome://navigate?url=" + encodeURIComponent("https://linktr.ee/Er.ance");
+            // Intentar abrir en Chrome (Android)
+            window.location.href = "intent://linktr.ee/Er.ance#Intent;scheme=https;package=com.android.chrome;end";
+            
+            // Redirección alternativa si falla (iOS/otros)
             setTimeout(function() {
                 window.location.href = "https://linktr.ee/Er.ance";
             }, 200);
         }
     </script>
+    
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6e48aa 0%, #9d50bb 100%);
+            color: white;
+            text-align: center;
+            padding: 30px 15px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 15px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        .btn {
+            display: inline-block;
+            background: #25D366;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            margin: 20px 0;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .btn:hover {
+            background: #128C7E;
+            transform: translateY(-3px);
+        }
+        .instructions {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 25px;
+            font-size: 14px;
+        }
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
 </head>
 <body>
-    <p>Si no eres redirigido, <a href="https://linktr.ee/Er.ance">haz clic aquí</a>.</p>
+    <div class="container">
+        <!-- Cambia esta imagen por tu logo si lo deseas -->
+        <img src="https://i.imgur.com/JqYeZzn.png" alt="Logo" class="logo">
+        
+        <h1>Para ver todo mi contenido exclusivo</h1>
+        <p>Instagram limita la experiencia. Haz clic en el botón y selecciona <strong>"Abrir en navegador"</strong>.</p>
+        
+        <!-- Botón principal -->
+        <a href="https://linktr.ee/Er.ance" class="btn">ABRIR EN NAVEGADOR EXTERNO</a>
+        
+        <!-- Instrucciones para iOS -->
+        <div class="instructions">
+            <p>📱 <strong>Si usas iPhone:</strong></p>
+            <ol>
+                <li>Toca los <strong>3 puntos</strong> arriba → "Abrir en Safari"</li>
+                <li>O copia este enlace: <strong>linktr.ee/Er.ance</strong></li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- Redirección automática para escritorios -->
+    <script>
+        if (!navigator.userAgent.match(/iPhone|iPad|iPod|Android/i)) {
+            window.location.href = "https://linktr.ee/Er.ance";
+        }
+    </script>
 </body>
 </html>
