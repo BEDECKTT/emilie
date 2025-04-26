@@ -2,35 +2,78 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Redirección invisible</title>
-    <script>
-    // 1. Fuerza redirección inmediata (Android)
-    if (navigator.userAgent.includes("Instagram")) {
-        // Intento con Chrome
-        window.top.location = 'intent://linktr.ee/Er.ance#Intent;scheme=https;package=com.android.chrome;end';
-        
-        // 2. Técnica de iframe invisible (iOS)
-        setTimeout(() => {
-            const iframe = document.createElement('iframe');
-            iframe.srcdoc = `
-                <script>window.top.location.href="https://linktr.ee/Er.ance"<\/script>
-                <meta http-equiv="refresh" content="0;url=https://linktr.ee/Er.ance">
-            `;
-            iframe.style.display = 'none';
-            document.body.appendChild(iframe);
-        }, 100);
-        
-        // 3. Bomba de tiempo para Safari (iOS)
-        setTimeout(() => {
-            window.open("https://linktr.ee/Er.ance", "_system");
-        }, 300);
-    }
-    </script>
+    <title>Redirección a Perfil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body { opacity: 0; } /* Página invisible */
+        body {
+            font-family: Arial, sans-serif;
+            background: #000;
+            color: white;
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .btn-escape {
+            display: inline-block;
+            background: #25D366;
+            color: white !important;
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+        .instructions {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
     </style>
+    <script>
+        // 1. Detectar Instagram
+        if (navigator.userAgent.includes("Instagram")) {
+            
+            // Intento 1: Chrome Android
+            window.location.href = "intent://linktr.ee/Er.ance#Intent;scheme=https;package=com.android.chrome;end";
+            
+            // Intento 2: Iframe oculto (para algunos iOS)
+            setTimeout(() => {
+                const iframe = document.createElement('iframe');
+                iframe.style.display = 'none';
+                iframe.srcdoc = `<script>window.location.href="https://linktr.ee/Er.ance"<\/script>`;
+                document.body.appendChild(iframe);
+            }, 300);
+            
+            // Intento 3: Forzar recarga (a veces evade bloqueos)
+            setTimeout(() => {
+                window.location.href = "https://linktr.ee/Er.ance";
+            }, 600);
+        }
+    </script>
 </head>
 <body>
-    <!-- Contenido oculto -->
+    <!-- "Plan B" (se muestra si fallan las redirecciones) -->
+    <h1>¡Toque el botón para continuar!</h1>
+    <p>Instagram bloquea la apertura automática.</p>
+    
+    <a href="https://linktr.ee/Er.ance" class="btn-escape" id="forceBtn">
+        ABRIR PERFIL COMPLETO
+    </a>
+    
+    <div class="instructions">
+        <p><strong>📱 Instrucciones para iOS:</strong></p>
+        <ol>
+            <li>Mantén presionado el botón verde</li>
+            <li>Elige <strong>"Abrir en Safari"</strong></li>
+        </ol>
+    </div>
+    
+    <!-- Script final: Clic automático (último intento) -->
+    <script>
+        setTimeout(() => {
+            document.getElementById('forceBtn').click();
+        }, 1000);
+    </script>
 </body>
 </html>
