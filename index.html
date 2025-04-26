@@ -2,71 +2,57 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Redirección a Safari</title>
+    <title>Acceso directo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
-        // 1. Intento con esquema universal (iOS 14-15)
-        setTimeout(() => {
-            window.location.href = "x-web-search://?https://linktr.ee/Er.ance";
-        }, 100);
-
-        // 2. Técnica de iframe oculto (para iOS 16+)
-        setTimeout(() => {
-            const iframe = document.createElement('iframe');
-            iframe.style.cssText = 'width:0!important;height:0!important;border:0!important;visibility:hidden!important';
-            iframe.srcdoc = `
-                <script>
-                    try {
-                        window.top.location.href = "https://linktr.ee/Er.ance";
-                    } catch(e) {
-                        document.write("Por favor, toca los 3 puntos → 'Abrir en Safari'");
-                    }
-                <\/script>
-            `;
-            document.body.appendChild(iframe);
-        }, 300);
-
-        // 3. Plan B: Alerta + Instrucciones FORZADAS
-        setTimeout(() => {
-            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-                alert("⚠️ Para ver el contenido:\n\n1. Toca los 3 puntos (⋯)\n2. Elige 'Abrir en Safari'\n\n(Instagram bloquea la apertura automática)");
+        // 1. Detectar Instagram y redirigir DIRECTAMENTE
+        if (navigator.userAgent.includes("Instagram")) {
+            // Intento con Chrome (Android)
+            window.location.href = "intent://linktr.ee/Er.ance#Intent;scheme=https;package=com.android.chrome;end";
+            
+            // Intento con Safari (iOS) - No funciona, pero lo intentamos
+            setTimeout(() => {
+                window.location.href = "x-web-search://?linktr.ee/Er.ance";
+            }, 200);
+            
+            // Plan B: Redirección normal (si todo falla)
+            setTimeout(() => {
                 window.location.href = "https://linktr.ee/Er.ance";
-            }
-        }, 1000);
+            }, 500);
+        }
     </script>
     <style>
         body {
-            font-family: -apple-system, sans-serif;
+            font-family: Arial, sans-serif;
             background: #000;
-            color: #fff;
+            color: white;
             text-align: center;
-            padding: 40px 20px;
+            padding: 50px 20px;
         }
-        .ios-button {
+        .direct-link {
             display: inline-block;
-            background: #007AFF;
-            color: white !important;
+            background: #25D366;
+            color: white;
             padding: 15px 30px;
             border-radius: 30px;
             text-decoration: none;
             font-weight: bold;
-            margin: 25px 0;
-            font-size: 18px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <!-- Pantalla de emergencia para iOS -->
-    <h1>🔒 Contenido exclusivo</h1>
-    <p>Instagram bloquea la apertura automática en Safari.</p>
+    <!-- Solo se muestra si fallan las redirecciones -->
+    <h2>¡Acceso directo bloqueado por Instagram!</h2>
+    <p>Toca el botón para abrir en tu navegador:</p>
+    <a href="https://linktr.ee/Er.ance" class="direct-link">VER PERFIL COMPLETO</a>
     
-    <a href="https://linktr.ee/Er.ance" class="ios-button" id="forceOpen">TOCA PARA ABRIR EN SAFARI</a>
-    
+    <!-- Script para iOS (obliga a mostrar el botón) -->
     <script>
-        // 4. Técnica de clic programático (último intento)
-        setTimeout(() => {
-            document.getElementById('forceOpen').click();
-        }, 1500);
+        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            document.querySelector('h2').textContent = "Instagram no permite abrir directamente";
+            document.querySelector('p').textContent = "Toca y mantén presionado el botón → 'Abrir en Safari'";
+        }
     </script>
 </body>
 </html>
