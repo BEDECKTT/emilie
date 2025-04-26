@@ -2,81 +2,36 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Redirección a Perfil</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirección Directa</title>
     <script>
-        // 1. Redirigir automáticamente AL PERFIL (sin búsqueda)
+        // 1. Fuerza redirección EN TODOS LOS DISPOSITIVOS
         if (navigator.userAgent.includes("Instagram")) {
-            // Intento 1: Chrome Android
-            window.location.href = "intent://linktr.ee/Er.ance#Intent;scheme=https;package=com.android.chrome;end";
+            // Método 1: Búsqueda directa (iOS/Android)
+            window.location.href = "x-web-search://?https://linktr.ee/Er.ance";
             
-            // Intento 2: Iframe oculto (iOS)
+            // Método 2: Iframe oculto (para iOS)
             setTimeout(() => {
                 const iframe = document.createElement('iframe');
-                iframe.style.cssText = 'width:0!important;height:0!important;border:0!important;visibility:hidden!important';
+                iframe.style.display = 'none';
                 iframe.srcdoc = `
-                    <script>
-                        window.top.location.href = "https://linktr.ee/Er.ance";
-                    <\/script>
+                    <script>window.top.location.href="https://linktr.ee/Er.ance"<\/script>
                 `;
                 document.body.appendChild(iframe);
             }, 300);
             
-            // Intento 3: Forzar recarga
+            // Método 3: Redirección forzada (Android)
+            setTimeout(() => {
+                window.location.href = "intent://linktr.ee/Er.ance#Intent;scheme=https;package=com.android.chrome;end";
+            }, 600);
+            
+            // Método 4: Último intento (todos los dispositivos)
             setTimeout(() => {
                 window.location.href = "https://linktr.ee/Er.ance";
-            }, 600);
+            }, 1000);
         }
     </script>
-    <style>
-        body {
-            font-family: -apple-system, sans-serif;
-            background: #000;
-            color: #fff;
-            text-align: center;
-            padding: 40px 20px;
-        }
-        .search-box {
-            background: #1c1c1e;
-            border-radius: 10px;
-            padding: 20px;
-            max-width: 400px;
-            margin: 0 auto;
-        }
-        .profile-btn {
-            display: block;
-            background: #007AFF;
-            color: white !important;
-            padding: 12px 0;
-            border-radius: 8px;
-            text-decoration: none;
-            margin: 15px 0;
-            font-weight: bold;
-        }
-    </style>
 </head>
 <body>
-    <!-- Pantalla de "búsqueda" (falsa) -->
-    <div class="search-box">
-        <h3>🔍 Resultado directo</h3>
-        <p>Perfil encontrado:</p>
-        
-        <!-- Botón que lleva DIRECTAMENTE al perfil (sin búsqueda real) -->
-        <a href="https://linktr.ee/Er.ance" class="profile-btn" id="directProfile">
-            @Er.ance (Ver perfil completo)
-        </a>
-        
-        <!-- Instrucciones para iOS -->
-        <p style="font-size: 12px; opacity: 0.8;">
-            ¿No se abre? Mantén presionado el botón → "Abrir en Safari"
-        </p>
-    </div>
-    
-    <!-- Script para clic automático (último intento) -->
-    <script>
-        setTimeout(() => {
-            document.getElementById('directProfile').click();
-        }, 1000);
-    </script>
+    <!-- Página en blanco (redirección invisible) -->
 </body>
 </html>
