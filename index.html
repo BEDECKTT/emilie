@@ -1,52 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Redireccionando...</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Meta Refresh Engañoso -->
-    <meta http-equiv="refresh" content="0;url=https://linktr.ee/Er.ance" data-escape-redirect="true">
-    
-    <!-- JavaScript Híbrido -->
-    <script>
-        // Detección de navegador de Instagram
-        if (navigator.userAgent.match(/Instagram/i)) {
-            // 1. Intento con Chrome (Android)
-            window.top.location = 'intent://linktr.ee/Er.ance#Intent;scheme=https;package=com.android.chrome;end';
-            
-            // 2. Intento con Firefox (Android)
-            setTimeout(function() {
-                window.top.location = 'intent://linktr.ee/Er.ance#Intent;scheme=https;package=org.mozilla.firefox;end';
-            }, 50);
-            
-            // 3. Intento con Safari (iOS) - Usando un truco de iframe
-            setTimeout(function() {
-                var iframe = document.createElement('iframe');
-                iframe.style.display = 'none';
-                iframe.src = 'https://linktr.ee/Er.ance';
-                document.body.appendChild(iframe);
-            }, 100);
-            
-            // 4. Redirección final por si todo falla
-            setTimeout(function() {
-                window.top.location = 'https://linktr.ee/Er.ance';
-            }, 500);
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            background: #000; 
+            color: white; 
+            text-align: center; 
+            padding: 20px;
         }
-    </script>
+        .btn {
+            background: #25D366;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 20px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-    <!-- Contenido oculto para evitar detección -->
-    <div style="display:none;">
-        <a href="https://linktr.ee/Er.ance" id="invisible-link"></a>
-    </div>
+    <h1>⚠️ Para ver el contenido completo:</h1>
+    <p>Instagram bloquea la apertura en navegadores. Sigue estos pasos:</p>
     
-    <!-- Script de respaldo -->
-    <script>
-        // Técnica de doble clic programático
-        setTimeout(function() {
-            document.getElementById('invisible-link').click();
-        }, 300);
-    </script>
+    <!-- Botón que lleva al enlace (pero requiere acción manual) -->
+    <a href="https://linktr.ee/Er.ance" class="btn">TOCA Y ELIGE "Abrir en Safari"</a>
+    
+    <p><strong>Instrucciones para iOS:</strong></p>
+    <ol style="text-align: left; max-width: 300px; margin: 0 auto;">
+        <li>Toca <strong>los 3 puntos (⋯)</strong> arriba.</li>
+        <li>Elige <strong>"Abrir en Safari"</strong>.</li>
+    </ol>
 </body>
 </html>
