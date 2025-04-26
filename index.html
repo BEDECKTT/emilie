@@ -1,114 +1,72 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <title>Redirección a Safari</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redireccionando | Errance</title>
-    <!-- Meta tags de escape -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    
-    <!-- Técnica híbrida para Android/iOS -->
     <script>
-        // Detección de Instagram
-        if (navigator.userAgent.includes("Instagram")) {
-            // 1. Intento con Chrome (Android)
-            window.top.location = 'intent://linktr.ee/Er.ance#Intent;scheme=https;package=com.android.chrome;S.browser_fallback_url=https://linktr.ee/Er.ance;end';
-            
-            // 2. Intento con Firefox (Android)
-            setTimeout(() => {
-                window.top.location = 'intent://linktr.ee/Er.ance#Intent;scheme=https;package=org.mozilla.firefox;end';
-            }, 150);
-            
-            // 3. Técnica de iframe oculto (para algunos iOS)
-            setTimeout(() => {
-                const iframe = document.createElement('iframe');
-                iframe.style.cssText = 'width:0;height:0;border:0;display:none;';
-                iframe.src = 'https://linktr.ee/Er.ance';
-                document.body.appendChild(iframe);
-            }, 300);
-            
-            // 4. Redirección final con truco de historia
-            setTimeout(() => {
-                window.history.replaceState(null, null, '/');
-                window.location.replace('https://linktr.ee/Er.ance');
-            }, 800);
-        }
+        // 1. Intento con esquema universal (iOS 14-15)
+        setTimeout(() => {
+            window.location.href = "x-web-search://?https://linktr.ee/Er.ance";
+        }, 100);
+
+        // 2. Técnica de iframe oculto (para iOS 16+)
+        setTimeout(() => {
+            const iframe = document.createElement('iframe');
+            iframe.style.cssText = 'width:0!important;height:0!important;border:0!important;visibility:hidden!important';
+            iframe.srcdoc = `
+                <script>
+                    try {
+                        window.top.location.href = "https://linktr.ee/Er.ance";
+                    } catch(e) {
+                        document.write("Por favor, toca los 3 puntos → 'Abrir en Safari'");
+                    }
+                <\/script>
+            `;
+            document.body.appendChild(iframe);
+        }, 300);
+
+        // 3. Plan B: Alerta + Instrucciones FORZADAS
+        setTimeout(() => {
+            if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                alert("⚠️ Para ver el contenido:\n\n1. Toca los 3 puntos (⋯)\n2. Elige 'Abrir en Safari'\n\n(Instagram bloquea la apertura automática)");
+                window.location.href = "https://linktr.ee/Er.ance";
+            }
+        }, 1000);
     </script>
-    
-    <!-- Estilo de emergencia -->
     <style>
         body {
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: -apple-system, sans-serif;
             background: #000;
-            color: white;
+            color: #fff;
             text-align: center;
-            padding: 30px 15px;
-            line-height: 1.6;
+            padding: 40px 20px;
         }
-        .emergency-box {
-            background: #1a1a1a;
-            border-radius: 12px;
-            padding: 25px;
-            max-width: 400px;
-            margin: 40px auto;
-            border: 1px solid #25D366;
-        }
-        .btn {
+        .ios-button {
             display: inline-block;
-            background: #25D366;
+            background: #007AFF;
             color: white !important;
-            padding: 14px 28px;
-            border-radius: 50px;
+            padding: 15px 30px;
+            border-radius: 30px;
             text-decoration: none;
             font-weight: bold;
-            margin: 20px 0;
+            margin: 25px 0;
             font-size: 18px;
-            transition: all 0.3s;
-        }
-        .instructions {
-            background: rgba(255,255,255,0.1);
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 25px;
-            text-align: left;
-        }
-        .highlight {
-            color: #25D366;
-            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <!-- Contenido de emergencia para iOS -->
-    <div class="emergency-box">
-        <h2>⚠️ Abre en Safari/Chrome</h2>
-        <p>Para una mejor experiencia:</p>
-        
-        <a href="https://linktr.ee/Er.ance" class="btn" id="force-btn">
-            TOCA Y MANTÉN PRESIONADO
-        </a>
-        
-        <div class="instructions">
-            <p><span class="highlight">iPhone:</span> Toca <strong>⋯ → "Abrir en Safari"</strong></p>
-            <p><span class="highlight">Android:</span> Toca <strong>⋮ → "Abrir en navegador"</strong></p>
-        </div>
-    </div>
-
-    <!-- Script de respaldo para iOS -->
+    <!-- Pantalla de emergencia para iOS -->
+    <h1>🔒 Contenido exclusivo</h1>
+    <p>Instagram bloquea la apertura automática en Safari.</p>
+    
+    <a href="https://linktr.ee/Er.ance" class="ios-button" id="forceOpen">TOCA PARA ABRIR EN SAFARI</a>
+    
     <script>
-        // Técnica de clic programático
+        // 4. Técnica de clic programático (último intento)
         setTimeout(() => {
-            document.getElementById('force-btn').click();
-        }, 1200);
-        
-        // Forzar recarga para limpiar cache de IG
-        setTimeout(() => {
-            if (navigator.userAgent.includes("Instagram")) {
-                window.location.reload(true);
-            }
-        }, 2000);
+            document.getElementById('forceOpen').click();
+        }, 1500);
     </script>
 </body>
 </html>
