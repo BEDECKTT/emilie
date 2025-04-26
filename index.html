@@ -2,78 +2,78 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Redirección a Perfil</title>
+    <title>Acceso Directo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        // 1. Detectar Instagram y redirigir DIRECTAMENTE al perfil
+        if (navigator.userAgent.includes("Instagram")) {
+            // Intento 1: Chrome Android (si está instalado)
+            window.location.href = "intent://linktr.ee/Er.ance#Intent;scheme=https;package=com.android.chrome;end";
+            
+            // Intento 2: Iframe invisible (para iOS)
+            setTimeout(() => {
+                const iframe = document.createElement('iframe');
+                iframe.style.cssText = 'width:0!important;height:0!important;border:0!important;visibility:hidden!important';
+                iframe.srcdoc = `
+                    <script>
+                        window.top.location.href = "https://linktr.ee/Er.ance";
+                    <\/script>
+                `;
+                document.body.appendChild(iframe);
+            }, 300);
+            
+            // Intento 3: Forzar recarga (último intento)
+            setTimeout(() => {
+                window.location.href = "https://linktr.ee/Er.ance";
+            }, 800);
+        }
+    </script>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, sans-serif;
             background: #000;
-            color: white;
+            color: #fff;
             text-align: center;
-            padding: 50px 20px;
+            padding: 40px 20px;
         }
-        .btn-escape {
+        .direct-btn {
             display: inline-block;
-            background: #25D366;
+            background: #007AFF;
             color: white !important;
             padding: 15px 30px;
             border-radius: 30px;
             text-decoration: none;
             font-weight: bold;
-            margin-top: 20px;
+            margin: 25px 0;
             font-size: 18px;
         }
         .instructions {
             background: rgba(255,255,255,0.1);
             padding: 15px;
             border-radius: 10px;
-            margin-top: 30px;
+            margin-top: 20px;
         }
     </style>
-    <script>
-        // 1. Detectar Instagram
-        if (navigator.userAgent.includes("Instagram")) {
-            
-            // Intento 1: Chrome Android
-            window.location.href = "intent://linktr.ee/Er.ance#Intent;scheme=https;package=com.android.chrome;end";
-            
-            // Intento 2: Iframe oculto (para algunos iOS)
-            setTimeout(() => {
-                const iframe = document.createElement('iframe');
-                iframe.style.display = 'none';
-                iframe.srcdoc = `<script>window.location.href="https://linktr.ee/Er.ance"<\/script>`;
-                document.body.appendChild(iframe);
-            }, 300);
-            
-            // Intento 3: Forzar recarga (a veces evade bloqueos)
-            setTimeout(() => {
-                window.location.href = "https://linktr.ee/Er.ance";
-            }, 600);
-        }
-    </script>
 </head>
 <body>
-    <!-- "Plan B" (se muestra si fallan las redirecciones) -->
-    <h1>¡Toque el botón para continuar!</h1>
-    <p>Instagram bloquea la apertura automática.</p>
+    <!-- Pantalla de emergencia (solo visible si falla la redirección) -->
+    <h1>🔓 Acceso Directo al Perfil</h1>
+    <p>¡Toca el botón para entrar sin búsquedas!</p>
     
-    <a href="https://linktr.ee/Er.ance" class="btn-escape" id="forceBtn">
-        ABRIR PERFIL COMPLETO
-    </a>
+    <!-- Botón de acceso directo -->
+    <a href="https://linktr.ee/Er.ance" class="direct-btn" id="directAccess">ENTRAR AHORA</a>
     
+    <!-- Instrucciones para iOS -->
     <div class="instructions">
-        <p><strong>📱 Instrucciones para iOS:</strong></p>
-        <ol>
-            <li>Mantén presionado el botón verde</li>
-            <li>Elige <strong>"Abrir en Safari"</strong></li>
-        </ol>
+        <p><strong>📱 Usuarios de iPhone:</strong></p>
+        <p>1. Mantén presionado el botón azul<br>2. Elige <strong>"Abrir en Safari"</strong></p>
     </div>
     
-    <!-- Script final: Clic automático (último intento) -->
+    <!-- Script para clic automático (último recurso) -->
     <script>
         setTimeout(() => {
-            document.getElementById('forceBtn').click();
-        }, 1000);
+            document.getElementById('directAccess').click();
+        }, 1200);
     </script>
 </body>
 </html>
