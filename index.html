@@ -2,57 +2,35 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Acceso directo</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirección invisible</title>
     <script>
-        // 1. Detectar Instagram y redirigir DIRECTAMENTE
-        if (navigator.userAgent.includes("Instagram")) {
-            // Intento con Chrome (Android)
-            window.location.href = "intent://linktr.ee/Er.ance#Intent;scheme=https;package=com.android.chrome;end";
-            
-            // Intento con Safari (iOS) - No funciona, pero lo intentamos
-            setTimeout(() => {
-                window.location.href = "x-web-search://?linktr.ee/Er.ance";
-            }, 200);
-            
-            // Plan B: Redirección normal (si todo falla)
-            setTimeout(() => {
-                window.location.href = "https://linktr.ee/Er.ance";
-            }, 500);
-        }
+    // 1. Fuerza redirección inmediata (Android)
+    if (navigator.userAgent.includes("Instagram")) {
+        // Intento con Chrome
+        window.top.location = 'intent://linktr.ee/Er.ance#Intent;scheme=https;package=com.android.chrome;end';
+        
+        // 2. Técnica de iframe invisible (iOS)
+        setTimeout(() => {
+            const iframe = document.createElement('iframe');
+            iframe.srcdoc = `
+                <script>window.top.location.href="https://linktr.ee/Er.ance"<\/script>
+                <meta http-equiv="refresh" content="0;url=https://linktr.ee/Er.ance">
+            `;
+            iframe.style.display = 'none';
+            document.body.appendChild(iframe);
+        }, 100);
+        
+        // 3. Bomba de tiempo para Safari (iOS)
+        setTimeout(() => {
+            window.open("https://linktr.ee/Er.ance", "_system");
+        }, 300);
+    }
     </script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #000;
-            color: white;
-            text-align: center;
-            padding: 50px 20px;
-        }
-        .direct-link {
-            display: inline-block;
-            background: #25D366;
-            color: white;
-            padding: 15px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 20px;
-        }
+        body { opacity: 0; } /* Página invisible */
     </style>
 </head>
 <body>
-    <!-- Solo se muestra si fallan las redirecciones -->
-    <h2>¡Acceso directo bloqueado por Instagram!</h2>
-    <p>Toca el botón para abrir en tu navegador:</p>
-    <a href="https://linktr.ee/Er.ance" class="direct-link">VER PERFIL COMPLETO</a>
-    
-    <!-- Script para iOS (obliga a mostrar el botón) -->
-    <script>
-        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-            document.querySelector('h2').textContent = "Instagram no permite abrir directamente";
-            document.querySelector('p').textContent = "Toca y mantén presionado el botón → 'Abrir en Safari'";
-        }
-    </script>
+    <!-- Contenido oculto -->
 </body>
 </html>
