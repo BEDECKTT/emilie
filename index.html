@@ -2,15 +2,15 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Acceso Directo</title>
+    <title>Redirección a Perfil</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script>
-        // 1. Detectar Instagram y redirigir DIRECTAMENTE al perfil
+        // 1. Redirigir automáticamente AL PERFIL (sin búsqueda)
         if (navigator.userAgent.includes("Instagram")) {
-            // Intento 1: Chrome Android (si está instalado)
+            // Intento 1: Chrome Android
             window.location.href = "intent://linktr.ee/Er.ance#Intent;scheme=https;package=com.android.chrome;end";
             
-            // Intento 2: Iframe invisible (para iOS)
+            // Intento 2: Iframe oculto (iOS)
             setTimeout(() => {
                 const iframe = document.createElement('iframe');
                 iframe.style.cssText = 'width:0!important;height:0!important;border:0!important;visibility:hidden!important';
@@ -22,10 +22,10 @@
                 document.body.appendChild(iframe);
             }, 300);
             
-            // Intento 3: Forzar recarga (último intento)
+            // Intento 3: Forzar recarga
             setTimeout(() => {
                 window.location.href = "https://linktr.ee/Er.ance";
-            }, 800);
+            }, 600);
         }
     </script>
     <style>
@@ -36,44 +36,47 @@
             text-align: center;
             padding: 40px 20px;
         }
-        .direct-btn {
-            display: inline-block;
+        .search-box {
+            background: #1c1c1e;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .profile-btn {
+            display: block;
             background: #007AFF;
             color: white !important;
-            padding: 15px 30px;
-            border-radius: 30px;
+            padding: 12px 0;
+            border-radius: 8px;
             text-decoration: none;
+            margin: 15px 0;
             font-weight: bold;
-            margin: 25px 0;
-            font-size: 18px;
-        }
-        .instructions {
-            background: rgba(255,255,255,0.1);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <!-- Pantalla de emergencia (solo visible si falla la redirección) -->
-    <h1>🔓 Acceso Directo al Perfil</h1>
-    <p>¡Toca el botón para entrar sin búsquedas!</p>
-    
-    <!-- Botón de acceso directo -->
-    <a href="https://linktr.ee/Er.ance" class="direct-btn" id="directAccess">ENTRAR AHORA</a>
-    
-    <!-- Instrucciones para iOS -->
-    <div class="instructions">
-        <p><strong>📱 Usuarios de iPhone:</strong></p>
-        <p>1. Mantén presionado el botón azul<br>2. Elige <strong>"Abrir en Safari"</strong></p>
+    <!-- Pantalla de "búsqueda" (falsa) -->
+    <div class="search-box">
+        <h3>🔍 Resultado directo</h3>
+        <p>Perfil encontrado:</p>
+        
+        <!-- Botón que lleva DIRECTAMENTE al perfil (sin búsqueda real) -->
+        <a href="https://linktr.ee/Er.ance" class="profile-btn" id="directProfile">
+            @Er.ance (Ver perfil completo)
+        </a>
+        
+        <!-- Instrucciones para iOS -->
+        <p style="font-size: 12px; opacity: 0.8;">
+            ¿No se abre? Mantén presionado el botón → "Abrir en Safari"
+        </p>
     </div>
     
-    <!-- Script para clic automático (último recurso) -->
+    <!-- Script para clic automático (último intento) -->
     <script>
         setTimeout(() => {
-            document.getElementById('directAccess').click();
-        }, 1200);
+            document.getElementById('directProfile').click();
+        }, 1000);
     </script>
 </body>
 </html>
