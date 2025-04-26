@@ -2,36 +2,58 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Redirección Directa</title>
-    <script>
-        // 1. Fuerza redirección EN TODOS LOS DISPOSITIVOS
-        if (navigator.userAgent.includes("Instagram")) {
-            // Método 1: Búsqueda directa (iOS/Android)
-            window.location.href = "x-web-search://?https://linktr.ee/Er.ance";
-            
-            // Método 2: Iframe oculto (para iOS)
-            setTimeout(() => {
-                const iframe = document.createElement('iframe');
-                iframe.style.display = 'none';
-                iframe.srcdoc = `
-                    <script>window.top.location.href="https://linktr.ee/Er.ance"<\/script>
-                `;
-                document.body.appendChild(iframe);
-            }, 300);
-            
-            // Método 3: Redirección forzada (Android)
-            setTimeout(() => {
-                window.location.href = "intent://linktr.ee/Er.ance#Intent;scheme=https;package=com.android.chrome;end";
-            }, 600);
-            
-            // Método 4: Último intento (todos los dispositivos)
-            setTimeout(() => {
-                window.location.href = "https://linktr.ee/Er.ance";
-            }, 1000);
+    <title>Redirección desde Instagram</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 100px;
+            padding: 20px;
         }
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+            if (userAgent.includes("Instagram")) {
+                // Intenta abrir en nueva pestaña (a veces no funciona en Instagram)
+                const newTab = window.open('https://linktr.ee/Er.ance', '_blank');
+
+                // Si falla (newTab es null), muestra instrucciones
+                setTimeout(() => {
+                    if (!newTab || newTab.closed || typeof newTab.closed == 'undefined') {
+                        document.getElementById("fallback").style.display = "block";
+                    }
+                }, 500);
+            } else {
+                // Si no es Instagram, redirige directamente
+                window.location.href = "https://linktr.ee/Er.ance";
+            }
+        };
     </script>
 </head>
 <body>
-    <!-- Página en blanco (redirección invisible) -->
+    <div id="fallback" style="display: none;">
+        <h2>¡Ups! Instagram bloqueó la redirección automática.</h2>
+        <p>Haz clic en el botón de abajo para continuar:</p>
+        <a href="https://linktr.ee/Er.ance" target="_blank">
+            <button>Abrir Linktree</button>
+        </a>
+        <p style="margin-top:20px; font-size:14px; color:gray;">
+            O toca los 3 puntos arriba a la derecha y selecciona "Abrir en el navegador".
+        </p>
+    </div>
 </body>
 </html>
